@@ -36,7 +36,7 @@ public class AddressBookController {
     }
 
     @DeleteMapping("/deleteData/{id}")
-    public Mono<Void> deleteData(Integer id) {
+    public Mono<Void> deleteData(@PathVariable Integer id) {
         return addressBookServices.deleteData(id);
     }
 }

@@ -1,0 +1,6 @@
+server:
+  port:
+    9393
+
+externalURL:
+  http://localhost:9292/addressBook
