@@ -1,6 +1,6 @@
 package com.lp.services;
 
-import com.lp.entity.AddressBookRemote;
+import com.lp.dto.AddressBookRemote;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

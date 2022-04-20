@@ -10,7 +10,8 @@ public interface AddressBookServices {
     Mono<AddressBookDto> saveData(AddressBookDto addressBookDto);
     Flux<AddressBookDto> getAllData();
     Mono<AddressBookDto> getData(Integer id);
-    Mono<AddressBookDto> updateData(AddressBook addressBook);
+    Mono<AddressBookDto> updateData(Integer id, AddressBook addressBook);
     Mono<Void> deleteData(Integer id);
+    Flux<AddressBookDto> getDataByState(String state);
 
 }

@@ -1,6 +1,6 @@
 package com.lp.services.impl;
 
-import com.lp.entity.AddressBookRemote;
+import com.lp.dto.AddressBookRemote;
 import com.lp.services.AddressBookRemoteServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,16 +1,12 @@
-package com.lp.entity;
+package com.lp.dto;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class AddressBookRemote {
 
-    @Id
     private Integer id;
     private String landmark;
     private String city;
