@@ -32,7 +32,8 @@ public class AddressBookServicesImpl implements AddressBookServices {
 
     @Override
     public Flux<AddressBookDto> getAllData() {
-       return addressBookRepo.findAll().map(MapStruct.INSTANCE::entityToDto);
+       return addressBookRepo.findAll()
+               .map(MapStruct.INSTANCE::entityToDto);
     }
 
     @Override
@@ -56,9 +57,6 @@ public class AddressBookServicesImpl implements AddressBookServices {
                 })
                 .flatMap(addUpdate -> addressBookRepo.save(addressBook))
                 .map(MapStruct.INSTANCE::entityToDto);
-//                .map(e -> addressBook)
-//                .flatMap(addressBookRepo::save)
-//                .map(MapStruct.INSTANCE::entityToDto);
     }
 
     @Override
