@@ -2,6 +2,7 @@ package com.lp.services.impl;
 
 import com.lp.dto.AddressBookDto;
 import com.lp.entity.AddressBook;
+import com.lp.exception.DataNotFoundException;
 import com.lp.exception.EmptyInputException;
 import com.lp.exception.ListEmptyException;
 import com.lp.mapper.MapStruct;
@@ -38,17 +39,19 @@ public class AddressBookServicesImpl implements AddressBookServices {
 
     @Override
     public Mono<AddressBookDto> getData(Integer id) {
-        return addressBookRepo.findById(id).map(MapStruct.INSTANCE::entityToDto);
+        return addressBookRepo.findById(id).map(MapStruct.INSTANCE::entityToDto)
+                .switchIfEmpty(Mono.error(new DataNotFoundException()));
     }
 
     @Override
     public Flux<AddressBookDto> getDataByState(String state) {
-        return addressBookRepo.findByState(state).map(MapStruct.INSTANCE::entityToDto);
+        return addressBookRepo.findByState(state).map(MapStruct.INSTANCE::entityToDto)
+                .switchIfEmpty(Mono.error(new DataNotFoundException()));
     }
 
     @Override
-    public Mono<AddressBookDto> updateData(Integer id, AddressBook addressBook) {
-        return addressBookRepo.findById(id)
+    public Mono<AddressBookDto> updateData(AddressBook addressBook) {
+        return addressBookRepo.findById(addressBook.getId())
                 .map(addUpdate -> {
                     addUpdate.setLandmark(addressBook.getLandmark());
                     addUpdate.setCity(addressBook.getCity());

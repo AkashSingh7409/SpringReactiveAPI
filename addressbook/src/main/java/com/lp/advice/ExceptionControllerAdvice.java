@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
@@ -23,7 +25,12 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(DataNotFoundException.class)
     public  ResponseEntity<String> handleDataNotFoundException(DataNotFoundException dataNotFoundException) {
-        return new ResponseEntity<String>("No such value present in DB, Please change valid input", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("Data not found in DB, Please enter valid input", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException noSuchElementException) {
+        return new ResponseEntity<String>("No such value present in DB, Please enter valid input", HttpStatus.NOT_FOUND);
     }
 
 }

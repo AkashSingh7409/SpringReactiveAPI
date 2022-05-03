@@ -28,8 +28,7 @@ public class AddressBookRemoteServicesImpl implements AddressBookRemoteServices 
             .uri(url + "/saveData")
             .body(Mono.just(addressBookRemote), AddressBookRemote.class)
             .retrieve()
-            .bodyToMono(AddressBookRemote.class)
-            .timeout(Duration.ofMillis(10_000));
+            .bodyToMono(AddressBookRemote.class);
     }
 
     @Override

@@ -18,13 +18,6 @@ public class AddressBookController {
     @Autowired
     private AddressBookServices addressBookServices;
 
-//    @PostMapping("/saveData")
-//    public Mono<ResponseEntity<AddressBookDto>> create(@RequestBody AddressBookDto addressBookDto) {
-//        return addressBookServices.saveData(addressBookDto)
-//                .map(s -> ResponseEntity.ok(s))
-//                .defaultIfEmpty(ResponseEntity.notFound().build());
-//    }
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/saveData")
     public Mono<AddressBookDto> create(@RequestBody AddressBookDto addressBookDto) {
@@ -37,30 +30,30 @@ public class AddressBookController {
         return addressBookServices.getAllData();
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/getData/{id}")
-    public Mono<AddressBookDto> getData(@PathVariable(required = true) Integer id) {
+    public Mono<ResponseEntity<AddressBookDto>> getData(@PathVariable(required = true) Integer id) {
         return addressBookServices.getData(id)
-                .switchIfEmpty(Mono.error(new DataNotFoundException()));
+            .map(u -> ResponseEntity.ok(u))
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/getDataByState/{state}")
     public Flux<AddressBookDto> getDataByState(@PathVariable(required = true) String state) {
-        return addressBookServices.getDataByState(state)
-                .switchIfEmpty(Mono.error(new DataNotFoundException()));
+        return addressBookServices.getDataByState(state);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping("/updateData/{id}")
-    public Mono<AddressBookDto> updateData(@PathVariable(required = true) Integer id, @RequestBody AddressBook addressBook) {
-        return addressBookServices.updateData(id, addressBook);
+    public Mono<ResponseEntity<AddressBookDto>> updateData(@RequestBody AddressBook addressBook) {
+        return addressBookServices.updateData(addressBook)
+            .map(updatedUser -> ResponseEntity.ok(updatedUser))
+            .defaultIfEmpty(ResponseEntity.badRequest().build());
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/deleteData/{id}")
-    public Mono<Void> deleteData(@PathVariable(required = true) Integer id) {
+    public Mono<ResponseEntity<String>> deleteData(@PathVariable(required = true) Integer id) {
         return addressBookServices.deleteData(id)
-                .switchIfEmpty(Mono.error(new DataNotFoundException()));
+            .map(r -> ResponseEntity.ok().body("Data deleted successfully"))
+            .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }
